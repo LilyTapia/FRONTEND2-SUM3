@@ -43,15 +43,30 @@ Frontend suele quedar en `http://localhost:5173`, backend en `http://localhost:4
 - REST detalle: `GET http://localhost:4000/api/events/:id`
 - GraphQL: `POST http://localhost:4000/graphql`
 
+## Variables de entorno (opcional)
+- `VITE_API_URL`: URL base del backend (sin slash final). Ejemplo: `http://localhost:4000` o la URL donde lo despliegues. Si no se define o falla la llamada, el frontend usa el catálogo mock embebido (`src/api/mockEvents.js`) para no romper la demo.
+
 ## Notas de funcionalidad
 - Cartelera (`/agenda`): filtros por categoría y búsqueda por nombre/ubicación (REST).
 - Detalle (`/evento/:id`): consulta principal por GraphQL con fallback REST; muestra imagen, organizador, aforo y ocupación.
 - Guardados (`/mis-pases`): usa localStorage; botón “Cancelar reserva” en coral sólido.
 - Navbar: acceso directo a cartelera y mis entradas; contador de guardados.
 
+## Despliegue en GitHub Pages
+La app está configurada con `base: '/FRONTEND2-SUM2/'` en `vite.config.js` y `BrowserRouter` usa ese `basename`. Para publicar:
+```bash
+cd frontend
+# (opcional) define VITE_API_URL antes del build si tienes backend desplegado
+VITE_API_URL=https://tu-backend.com npm run build
+npx gh-pages -d dist -b gh-pages
+```
+Si no defines `VITE_API_URL`, la versión publicada usará los datos mock internos para evitar el “Failed to fetch”.
+
 ## Pruebas rápidas sugeridas
-- Navegadores: Chrome/Firefox desktop. Verificar carga de imágenes y navegación.
+- Navegadores: Chrome/Firefox/Edge desktop. Verificar carga de imágenes, navegación y guardados.
 - Responsive: revisar navbar/hero/cards en mobile/tablet.
+- Sin backend: validar que en GitHub Pages carga la cartelera con datos mock y no muestra errores.
+- Con backend: al definir `VITE_API_URL`, validar REST (cartelera) y GraphQL (detalle) sin errores.
 
 ## Licencia
 Uso académico/demostrativo (mock). Imágenes referenciales de Puntoticket.***

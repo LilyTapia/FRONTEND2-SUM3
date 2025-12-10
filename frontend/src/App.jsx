@@ -21,7 +21,7 @@ function App() {
       <footer className="border-t border-sand-200 bg-white/80">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs text-slate-600 md:px-6">
           <span>Frontend II · Sumativa 2 · REST + GraphQL</span>
-          <span className="text-brand-700">Mock server local en puerto 4000</span>
+          <span className="text-brand-700">Datos mock locales (o API en VITE_API_URL)</span>
         </div>
       </footer>
     </div>

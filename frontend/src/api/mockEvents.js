@@ -1,0 +1,122 @@
+// Catálogo mock reutilizado en producción (GitHub Pages) y como respaldo offline
+const mockEvents = [
+  {
+    id: '1',
+    title: 'Luis Miguel - Tour 2025',
+    date: '2025-03-10',
+    location: 'Estadio Nacional',
+    category: 'Concierto',
+    organizer: 'PuntoTicket',
+    confirmed: 18000,
+    capacity: 50000,
+    description:
+      'El Sol de México regresa a Chile con un repertorio completo de éxitos. Producción oficial anunciada en PuntoTicket.',
+    image: 'https://static.ptocdn.net/especiales/pls010_luis-miguel-2024/img/luismiguel__desktop.jpg',
+  },
+  {
+    id: '2',
+    title: 'Morat - Los Estadios Tour',
+    date: '2025-02-21',
+    location: 'Estadio Monumental',
+    category: 'Concierto',
+    organizer: 'PuntoTicket',
+    confirmed: 22000,
+    capacity: 42000,
+    description:
+      'La banda colombiana trae su gira “Los Estadios Tour” con un show extendido y escenografía renovada.',
+    image: 'https://static.ptocdn.net/images/eventos/biz332_rs.jpg',
+  },
+  {
+    id: '3',
+    title: 'Karol G - Mañana Será Bonito Tour',
+    date: '2025-04-12',
+    location: 'Estadio Nacional',
+    category: 'Concierto',
+    organizer: 'PuntoTicket',
+    confirmed: 35000,
+    capacity: 50000,
+    description:
+      'La Bichota aterriza en Santiago con su tour mundial, producción de gran formato y invitados sorpresa.',
+    image: 'https://static.ptocdn.net/especiales/biz246_karol-g/recursos/videos/karol-g-tour.jpg',
+  },
+  {
+    id: '4',
+    title: 'Lollapalooza Chile 2025',
+    date: '2025-03-28',
+    location: 'Parque Bicentenario Cerrillos',
+    category: 'Festival',
+    organizer: 'PuntoTicket',
+    confirmed: 48000,
+    capacity: 70000,
+    description:
+      'Tres días de música y cultura al aire libre. Lineup internacional, zonas de foodtruck y arte urbano.',
+    image: 'https://static.ptocdn.net/especiales/lol091_lollapalooza/img/slide-landingVIERNES-min.jpg',
+  },
+  {
+    id: '5',
+    title: 'Disney On Ice - Find Your Hero',
+    date: '2025-01-15',
+    location: 'Movistar Arena',
+    category: 'Familia',
+    organizer: 'PuntoTicket',
+    confirmed: 8000,
+    capacity: 12000,
+    description:
+      'El espectáculo sobre hielo reúne a los clásicos de Disney en una puesta en escena para toda la familia.',
+    image: 'https://static.ptocdn.net/especiales/rgb012_disney-on-ice/img/portada-desk-v3.jpg',
+  },
+  {
+    id: '6',
+    title: 'Cirque du Soleil - Crystal',
+    date: '2025-05-05',
+    location: 'Movistar Arena',
+    category: 'Teatro',
+    organizer: 'PuntoTicket',
+    confirmed: 9000,
+    capacity: 12000,
+    description:
+      'El Cirque du Soleil vuelve a Chile con “Crystal”, un show que combina patinaje sobre hielo y acrobacias aéreas.',
+    image: 'https://static-puntoticket.s3.amazonaws.com/especiales/rec059_cirque-du-soleil/img/foto1.jpg',
+  },
+  {
+    id: '7',
+    title: 'Monster Jam Santiago',
+    date: '2025-07-01',
+    location: 'Estadio Sausalito',
+    category: 'Deporte',
+    organizer: 'PuntoTicket',
+    confirmed: 12000,
+    capacity: 30000,
+    description:
+      'Las icónicas camionetas gigantes llegan con saltos, carreras y freestyle para toda la familia.',
+    image: 'https://static.ptocdn.net/images/eventos/wal202_rs.jpg',
+  },
+  {
+    id: '8',
+    title: 'Festival de Viña 2025 - Noche Pop',
+    date: '2025-02-25',
+    location: 'Quinta Vergara',
+    category: 'Festival',
+    organizer: 'PuntoTicket',
+    confirmed: 14000,
+    capacity: 15000,
+    description:
+      'Una de las noches temáticas del Festival de Viña 2025 con artistas pop internacionales y el humor clásico del certamen.',
+    image: 'https://static.ptocdn.net/images/eventos/fv2026_rs.jpg',
+  },
+  {
+    id: '9',
+    title: 'Jurassic World: The Experience',
+    date: '2025-06-15',
+    location: 'Centro de Eventos Los Andes',
+    category: 'Familia',
+    organizer: 'PuntoTicket',
+    confirmed: 6000,
+    capacity: 15000,
+    description:
+      'Recorre los domos interactivos de Jurassic World con dinosaurios animatrónicos a escala real y experiencias educativas para toda la familia.',
+    image: 'https://static.ptocdn.net/especiales/wal251_jurassic-world-the-experience/img/portada-desktop-los-andes-v5.jpg',
+  },
+];
+
+export default mockEvents;
