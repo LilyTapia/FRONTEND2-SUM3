@@ -4,9 +4,9 @@ import { useRecipes } from '../context/RecipeContext';
 
 function Pill({ label, value }) {
   return (
-    <div className="flex flex-col rounded-2xl border border-white/30 bg-white/20 p-4 text-white shadow-inner backdrop-blur">
-      <span className="text-xs font-semibold uppercase">{label}</span>
-      <span className="text-xl font-black leading-tight sm:text-2xl">{value}</span>
+    <div className="flex flex-col rounded-2xl border border-slate-200 bg-white/90 p-4 text-slate-800 shadow-soft">
+      <span className="text-xs font-semibold uppercase text-slate-500">{label}</span>
+      <span className="text-xl font-black leading-tight text-slate-900 sm:text-2xl">{value}</span>
     </div>
   );
 }

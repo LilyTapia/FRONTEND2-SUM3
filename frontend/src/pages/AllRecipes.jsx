@@ -50,7 +50,7 @@ export default function AllRecipes() {
             <input
               type="search"
               placeholder="Buscar por nombre o dificultad"
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
