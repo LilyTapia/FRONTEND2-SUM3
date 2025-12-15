@@ -1,57 +1,58 @@
-import mockEvents from './mockEvents';
+import mockRecipes from './mockRecipes';
 
 const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 const getMockList = () =>
-  mockEvents.map(({ id, title, date, location, category, image }) => ({
+  mockRecipes.map(({ id, title, category, difficulty, cookTime, image, shortDescription }) => ({
     id,
     title,
-    date,
-    location,
     category,
+    difficulty,
+    cookTime,
     image,
+    shortDescription,
   }));
 
-export async function fetchEventsREST() {
+export async function fetchRecipesREST() {
   if (!API_URL) {
     return getMockList();
   }
 
   try {
-    const response = await fetch(`${API_URL}/api/events`);
+    const response = await fetch(`${API_URL}/api/recipes`);
     if (!response.ok) {
-      throw new Error('No se pudieron cargar los eventos');
+      throw new Error('No se pudieron cargar las recetas');
     }
     return response.json();
   } catch (err) {
-    console.warn('Fallo API remota, usando catálogo mock', err);
+    console.warn('Fallo API REST remota, usando catálogo mock', err);
     return getMockList();
   }
 }
 
-export async function fetchEventDetailREST(id) {
-  const mock = mockEvents.find((item) => String(item.id) === String(id));
+export async function fetchRecipeDetailREST(id) {
+  const mock = mockRecipes.find((item) => String(item.id) === String(id));
 
   if (!API_URL) {
     if (mock) return mock;
-    throw new Error('Evento no encontrado');
+    throw new Error('Receta no encontrada');
   }
 
   try {
-    const response = await fetch(`${API_URL}/api/events/${id}`);
+    const response = await fetch(`${API_URL}/api/recipes/${id}`);
     if (!response.ok) {
-      throw new Error('Evento no encontrado');
+      throw new Error('Receta no encontrada');
     }
     return response.json();
   } catch (err) {
-    console.warn('Fallo API remota, usando catálogo mock', err);
+    console.warn('Fallo API REST remota, usando catálogo mock', err);
     if (mock) return mock;
-    throw new Error('No se pudo cargar el evento');
+    throw new Error('No se pudo cargar la receta');
   }
 }
 
-export async function fetchEventDetailGraphQL(id) {
-  const mock = mockEvents.find((item) => String(item.id) === String(id));
+export async function fetchRecipeDetailGraphQL(id) {
+  const mock = mockRecipes.find((item) => String(item.id) === String(id));
 
   if (!API_URL) {
     if (mock) return mock;
@@ -59,17 +60,17 @@ export async function fetchEventDetailGraphQL(id) {
   }
 
   const query = `
-    query Event($id: ID!) {
-      event(id: $id) {
+    query Recipe($id: ID!) {
+      recipe(id: $id) {
         id
         title
-        date
-        location
         category
-        organizer
-        confirmed
-        capacity
-        description
+        difficulty
+        cookTime
+        servings
+        shortDescription
+        ingredients
+        steps
         image
       }
     }
@@ -87,7 +88,7 @@ export async function fetchEventDetailGraphQL(id) {
       throw new Error(result.errors?.[0]?.message || 'No se pudo cargar el detalle');
     }
 
-    return result.data.event;
+    return result.data.recipe;
   } catch (err) {
     console.warn('Fallo GraphQL remoto, usando catálogo mock', err);
     if (mock) return mock;

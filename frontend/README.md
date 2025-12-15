@@ -1,72 +1,57 @@
-# Colomba · Centro de eventos (React + Vite + Tailwind)
+# Colomba Kitchen · Recetario (Semana 8 · Sumativa 3)
 
-SPA que consume un backend mock (REST y GraphQL) para listar eventos y ver sus detalles. Incluye gestión local de “entradas guardadas” (localStorage) y UI responsive.
+SPA en React + Vite + Tailwind que usa un backend mock (REST y GraphQL) para listar recetas y ver su detalle con ingredientes y pasos. Incluye guardado local de recetas (localStorage) y UI responsive.
 
 ## Estructura
-- `backend/index.js`: Express + ApolloServer. Endpoints REST `/api/events`, `/api/events/:id` y GraphQL `/graphql`. Catálogo mock con imágenes oficiales de Puntoticket.
-- `frontend/src/api/events.js`: llamadas REST/GraphQL.
-- `frontend/src/context/EventContext.jsx`: estado global (eventos, loading/error, guardados en localStorage, stats).
-- `frontend/src/components/`: Navbar, EventCard.
-- `frontend/src/pages/`: Home, AllEvents (cartelera con filtros), EventDetail, MyTickets.
-- `frontend/src/utils/eventMedia.js`: fallback de imágenes por categoría.
+- `frontend/src/api/recipes.js`: llamadas REST/GraphQL con fallback al mock local (`src/api/mockRecipes.js`).
+- `frontend/src/context/RecipeContext.jsx`: estado global (recetas, loading/error, guardados en localStorage, stats).
+- `frontend/src/components/`: Navbar, RecipeCard.
+- `frontend/src/pages/`: Home, AllRecipes (filtros), RecipeDetail, SavedRecipes.
+- `frontend/src/utils/recipeMedia.js`: fallback de imágenes por categoría.
+- `frontend/src/mocks/`: MSW (handlers/server) para pruebas.
+- `frontend/cypress/`: pruebas E2E.
 
 ## Requisitos previos
 - Node 18+.
 
 ## Instalación
 ```bash
-cd backend
-npm install
-cd ../frontend
+cd frontend
 npm install
 ```
 
 ## Ejecución en desarrollo
-En dos terminales:
 ```bash
-# Terminal 1: backend
-cd backend
-node index.js
-
-# Terminal 2: frontend
 cd frontend
 npm run dev
 ```
-Frontend suele quedar en `http://localhost:5173`, backend en `http://localhost:4000`.
-
-## Scripts
-- Frontend: `npm run dev`, `npm run build`, `npm run preview`, `npm run lint`.
-- Backend: no tiene scripts; se ejecuta con `node index.js`.
-
-## Endpoints mock
-- REST listado: `GET http://localhost:4000/api/events`
-- REST detalle: `GET http://localhost:4000/api/events/:id`
-- GraphQL: `POST http://localhost:4000/graphql`
+Frontend en `http://localhost:5173` (usa datos mock si no hay backend real).
 
 ## Variables de entorno (opcional)
-- `VITE_API_URL`: URL base del backend (sin slash final). Ejemplo: `http://localhost:4000` o la URL donde lo despliegues. Si no se define o falla la llamada, el frontend usa el catálogo mock embebido (`src/api/mockEvents.js`) para no romper la demo.
+- `VITE_API_URL`: URL base del backend (sin slash final). Si no se define o falla la llamada, el frontend usa el catálogo mock embebido.
 
-## Notas de funcionalidad
-- Cartelera (`/agenda`): filtros por categoría y búsqueda por nombre/ubicación (REST).
-- Detalle (`/evento/:id`): consulta principal por GraphQL con fallback REST; muestra imagen, organizador, aforo y ocupación.
-- Guardados (`/mis-pases`): usa localStorage; botón “Cancelar reserva” en coral sólido.
-- Navbar: acceso directo a cartelera y mis entradas; contador de guardados.
+## Scripts útiles
+- `npm run dev` (desarrollo)
+- `npm run build` / `npm run preview`
+- `npm run lint`
+- `npm test` (Vitest + RTL + cobertura)
+- `npm run cypress:run` / `npm run cypress:open` (E2E)
 
-## Despliegue en GitHub Pages
-La app está configurada con `base: '/FRONTEND2-SUM2/'` en `vite.config.js` y `BrowserRouter` usa ese `basename`. Para publicar:
+## Pruebas
+- Unitarias/integración: Vitest + React Testing Library + MSW, cobertura 100% (Stmts/Funcs/Lines/Branches).
+- E2E: Cypress con 4 flujos principales (navegación, filtros, guardado de receta).
+
+## Funcionalidad clave
+- Recetario (`/recetas`): filtros por categoría y búsqueda por nombre/dificultad (REST mock).
+- Detalle (`/receta/:id`): GraphQL mock con fallback REST; muestra tiempo, dificultad, porciones, ingredientes y pasos.
+- Guardados (`/favoritas`): persistencia en localStorage.
+
+## Despliegue (GitHub Pages)
+Configuración con `base: '/FRONTEND2-SUM2/'` en `vite.config.js`. Para publicar:
 ```bash
 cd frontend
-# (opcional) define VITE_API_URL antes del build si tienes backend desplegado
-VITE_API_URL=https://tu-backend.com npm run build
+# opcional: export VITE_API_URL si tienes backend real
+npm run build
 npx gh-pages -d dist -b gh-pages
 ```
-Si no defines `VITE_API_URL`, la versión publicada usará los datos mock internos para evitar el “Failed to fetch”.
-
-## Pruebas rápidas sugeridas
-- Navegadores: Chrome/Firefox/Edge desktop. Verificar carga de imágenes, navegación y guardados.
-- Responsive: revisar navbar/hero/cards en mobile/tablet.
-- Sin backend: validar que en GitHub Pages carga la cartelera con datos mock y no muestra errores.
-- Con backend: al definir `VITE_API_URL`, validar REST (cartelera) y GraphQL (detalle) sin errores.
-
-## Licencia
-Uso académico/demostrativo (mock). Imágenes referenciales de Puntoticket.***
+Sin `VITE_API_URL`, la versión publicada usa los datos mock internos.

@@ -1,6 +1,6 @@
-# Centro de Eventos · REST + GraphQL
+# Recetario · REST + GraphQL (Semana 8 · Sumativa 3)
 
-Pequeña app React que consume un backend mock. La lista de eventos se obtiene por REST y el detalle por GraphQL.
+SPA React para explorar y guardar recetas. El listado se obtiene por REST mock (título, categoría, dificultad, tiempo) y el detalle con ingredientes/pasos llega por GraphQL simulado.
 
 ## Cómo correrlo
 
@@ -10,7 +10,7 @@ Pequeña app React que consume un backend mock. La lista de eventos se obtiene p
    npm install
    npm start
    ```
-   - REST: http://localhost:4000/api/events y `/api/events/:id`
+   - REST: http://localhost:4000/api/recipes y `/api/recipes/:id`
    - GraphQL (playground): http://localhost:4000/graphql
 
 2. Frontend (puerto 5173):
@@ -23,28 +23,28 @@ Pequeña app React que consume un backend mock. La lista de eventos se obtiene p
 
 ## Query de ejemplo (GraphQL)
 ```graphql
-query Evento($id: ID!) {
-  event(id: $id) {
+query Receta($id: ID!) {
+  recipe(id: $id) {
     id
     title
-    date
-    location
     category
-    organizer
-    confirmed
-    capacity
-    description
+    difficulty
+    cookTime
+    servings
+    shortDescription
+    ingredients
+    steps
+    image
   }
 }
 ```
 
 ## Estructura
 - `backend/`: servidor Express con endpoints REST y esquema GraphQL usando Apollo Server.
-  - `index.js`: datos mock + rutas REST `/api/events` y `/api/events/:id` + endpoint `/graphql`.
+  - `index.js`: datos mock de recetas + rutas REST `/api/recipes` y `/api/recipes/:id` + endpoint `/graphql`.
 - `frontend/`: app React con React Router; listado via REST y detalle via GraphQL.
-  - `src/services/api.js`: cliente REST/GraphQL.
-  - `src/pages/EventList.jsx`: lista y filtros (REST).
-  - `src/pages/EventDetail.jsx`: detalle con barra de ocupación (GraphQL).
-  - `src/components/EventCard.jsx`: tarjeta reutilizable para eventos.
-  - `src/App.jsx`, `src/main.jsx`: layout general y enrutamiento.
-  - Estilos con Tailwind CSS (`tailwind.config.js`, `postcss.config.js`) y tipografías Space Grotesk/Manrope.
+  - `src/api/recipes.js`: cliente REST/GraphQL con fallback al catálogo mock interno.
+  - `src/context/RecipeContext.jsx`: estado global (recetas, loading/error, guardados en localStorage, stats).
+  - `src/pages/`: Home, AllRecipes (filtros REST), RecipeDetail (GraphQL), SavedRecipes (favoritos).
+  - `src/components/RecipeCard.jsx`, `src/components/Navbar.jsx`: UI reutilizable.
+  - Estilos con Tailwind CSS (`tailwind.config.js`, `postcss.config.js`) y tipografías Sora/Work Sans.

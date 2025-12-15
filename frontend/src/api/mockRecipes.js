@@ -1,9 +1,5 @@
-const express = require('express');
-const cors = require('cors');
-const { ApolloServer, gql } = require('apollo-server-express');
-
-// Catálogo mock de recetas (compartido por REST y GraphQL)
-const recipes = [
+// Catálogo mock utilizado tanto para la API REST como para simular el backend GraphQL
+const mockRecipes = [
   {
     id: '1',
     title: 'Tiramisú clásico',
@@ -29,7 +25,7 @@ const recipes = [
       'Armar capas de vainillas y crema en una fuente. Refrigerar al menos 4 horas.',
       'Servir espolvoreando cacao amargo justo antes de llevar a la mesa.',
     ],
-    image: 'https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://www.haceloconhuevos.com/wp-content/uploads/2022/02/Tiramisu%CC%81-cla%CC%81sico.jpg',
   },
   {
     id: '2',
@@ -56,7 +52,7 @@ const recipes = [
       'Incorporar el miso sin que hierva. Ajustar sal.',
       'Cocer los fideos según envase y servir con caldo caliente, pollo, huevo y cebollín.',
     ],
-    image: 'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://cocinista.b-cdn.net/download/bancorecursos/recetas/receta-ramen-pollo.jpg',
   },
   {
     id: '3',
@@ -81,7 +77,7 @@ const recipes = [
       'Mezclar los vegetales con el dressing y coronar con feta y aceitunas.',
       'Servir de inmediato para mantener el crocante del pepino.',
     ],
-    image: 'https://images.unsplash.com/photo-1604908177773-0ac1c9d1e941?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://comedera.com/wp-content/uploads/sites/9/2024/10/ensalada-mediterranea-de-tomate-aceitunas-y-queso-feta.jpg?fit=1316,877&crop=0px,69px,1316px,740px',
   },
   {
     id: '4',
@@ -107,7 +103,7 @@ const recipes = [
       'Verter en molde cuadrado y hornear a 180°C por 22-25 minutos.',
       'Enfriar completamente antes de cortar para lograr bordes firmes y centro húmedo.',
     ],
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476f?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://www.lambonadasdegalicia.club/wp-content/uploads/2022/03/brownie-humedo-scaled.jpg',
   },
   {
     id: '5',
@@ -132,7 +128,7 @@ const recipes = [
       'Hornear 12-14 minutos según grosor hasta que el centro esté jugoso.',
       'Terminar con eneldo fresco y servir con vegetales asados.',
     ],
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://www.lacocinadealigator.com/clients/lacocinadealigator/food/recipe/images/72_details.jpg',
   },
   {
     id: '6',
@@ -162,7 +158,7 @@ const recipes = [
   },
   {
     id: '7',
-    title: 'Pan de masa madre exprés',
+    title: 'Pan de masa madre express',
     category: 'Panadería',
     difficulty: 'Avanzado',
     cookTime: 180,
@@ -183,7 +179,7 @@ const recipes = [
       'Formar una bola tensa, colocar en banneton enharinado y fermentar 45 minutos.',
       'Hornear en olla de hierro a 240°C: 20 minutos tapado y 20 destapado hasta dorar.',
     ],
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://nereazorokiaingarin.com/wp-content/uploads/2020/01/NHI0144-1536x1536.jpeg',
   },
   {
     id: '8',
@@ -208,7 +204,7 @@ const recipes = [
       'Mezclar yogur con el resto del jugo de lima y ralladura para la salsa.',
       'Calentar las tortillas y armar tacos con pescado, repollo, salsa y cilantro.',
     ],
-    image: 'https://images.unsplash.com/photo-1528838060463-4bebac276b38?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://okdiario.com/img/2024/08/21/tacos-de-pescado-con-ensalada-de-col-y-salsa-de-yogur-635x358.jpg',
   },
   {
     id: '9',
@@ -233,78 +229,8 @@ const recipes = [
       'Agregar hielo si se quiere más espeso y volver a batir.',
       'Servir de inmediato para aprovechar los nutrientes.',
     ],
-    image: 'https://images.unsplash.com/photo-1446292532430-3e76f6ab6444?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://www.selfprotein.com/wp-content/uploads/2024/09/green-energy-smoothie.png',
   },
 ];
 
-const typeDefs = gql`
-  type Recipe {
-    id: ID!
-    title: String!
-    category: String!
-    difficulty: String!
-    cookTime: Int!
-    servings: Int
-    shortDescription: String!
-    ingredients: [String!]!
-    steps: [String!]!
-    image: String
-  }
-
-  type Query {
-    recipes: [Recipe!]!
-    recipe(id: ID!): Recipe
-  }
-`;
-
-const resolvers = {
-  Query: {
-    recipes: () => recipes,
-    recipe: (_, { id }) => recipes.find((recipe) => recipe.id === id),
-  },
-};
-
-async function startServer() {
-  const app = express();
-  app.use(cors());
-
-  // Endpoint REST para listado (solo datos clave para la grilla)
-  app.get('/api/recipes', (_req, res) => {
-    const baseRecipes = recipes.map(({ id, title, category, difficulty, cookTime, image, shortDescription }) => ({
-      id,
-      title,
-      category,
-      difficulty,
-      cookTime,
-      image,
-      shortDescription,
-    }));
-
-    res.json(baseRecipes);
-  });
-
-  // Endpoint REST para detalle rápido
-  app.get('/api/recipes/:id', (req, res) => {
-    const recipe = recipes.find((item) => item.id === req.params.id);
-    if (!recipe) {
-      res.status(404).json({ message: 'Receta no encontrada' });
-      return;
-    }
-    res.json(recipe);
-  });
-
-  const server = new ApolloServer({ typeDefs, resolvers });
-  await server.start();
-  server.applyMiddleware({ app, path: '/graphql', cors: false });
-
-  const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => {
-    console.log(`Mock server listo en http://localhost:${PORT}`);
-    console.log(`REST: http://localhost:${PORT}/api/recipes`);
-    console.log(`GraphQL: http://localhost:${PORT}/graphql`);
-  });
-}
-
-startServer().catch((err) => {
-  console.error('Error al iniciar el servidor', err);
-});
+export default mockRecipes;
