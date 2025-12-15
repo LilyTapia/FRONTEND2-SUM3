@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/FRONTEND2-SUM2/',
+  base: '/FRONTEND2-SUM3/',
   plugins: [react()],
   test: {
     environment: 'jsdom',
