@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist -b gh-pages",
+    "deploy": "npm run build && gh-pages -d dist -b gh-pages",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "cypress:open": "cypress open",
