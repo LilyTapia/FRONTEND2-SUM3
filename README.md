@@ -1,8 +1,15 @@
 # Recetario · REST + GraphQL (Semana 8 · Sumativa 3)
 
-SPA React para explorar y guardar recetas. El listado se obtiene por REST mock (título, categoría, dificultad, tiempo) y el detalle con ingredientes/pasos llega por GraphQL simulado.
+## Objetivo
+Desarrollar una SPA de recetas (HTML/JS/CSS/React) que permita explorar y guardar recetas, consumiendo una API REST mock para el listado (título, dificultad, categoría, tiempo) y una API GraphQL mock para el detalle (ingredientes, método, tiempo). La actividad exige calidad de código: linting, pruebas unitarias con cobertura ≥70% (Stmts/Funcs/Lines) y pruebas E2E.
 
-## Cómo correrlo
+## Requisitos de la actividad
+1) App de recetas: listar recetas (REST mock), ver detalle individual (GraphQL mock), filtrar y guardar recetas.  
+2) Pruebas unitarias/integración: Vitest (Jest-like) + React Testing Library + MSW para mock de backend. Cobertura mínima 70% (actual: 100%).  
+3) Pruebas E2E: Cypress con al menos 4 flujos de usuario (navegación, filtros, guardado).  
+4) Linting: ESLint configurado.
+
+## Cómo correrlo (local)
 
 1. Backend (puerto 4000):
    ```bash
