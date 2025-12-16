@@ -14,6 +14,7 @@ const getMockList = () =>
   }));
 
 export async function fetchRecipesREST() {
+  // Si no hay backend configurado, trabajamos 100% contra el catálogo mock.
   if (!API_URL) {
     return getMockList();
   }

@@ -14,12 +14,14 @@ export default function RecipeDetail() {
   const baseInfo = useMemo(() => recipes.find((item) => String(item.id) === String(id)), [recipes, id]);
 
   useEffect(() => {
+    // Evita actualizar estado si el componente se desmonta mientras la request sigue viva.
     let active = true;
 
     const loadDetail = async () => {
       setLoading(true);
       setError('');
       try {
+        // Primero intentamos el GraphQL enriquecido; si falla, retrocedemos a la REST/mock.
         const detail = await fetchRecipeDetailGraphQL(id);
         if (active) setRecipe(detail);
       } catch (graphError) {

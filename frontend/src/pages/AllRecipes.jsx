@@ -14,6 +14,7 @@ export default function AllRecipes() {
   }, [recipes]);
 
   const filtered = useMemo(() => {
+    // Unificamos título, descripción y dificultad para un search simple y case-insensitive.
     return recipes.filter((recipe) => {
       const matchesCategory = category === 'Todas' || recipe.category === category;
       const text = `${recipe.title} ${recipe.shortDescription} ${recipe.difficulty}`.toLowerCase();
